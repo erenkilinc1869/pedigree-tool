@@ -73,7 +73,7 @@ physicians of the Department of Medical Genetics, Erciyes University.
 
 ## Acknowledgements
 
-With thanks to Dr. Nuh Altunoğlu.
+With thanks to Dr. Nuh Altunoğlu for his contributions to the development of the program.
 
 ## Licence
 
@@ -105,6 +105,6 @@ olarak dışa aktarılabilir.
   kullanılamaz. Hasta verilerinin KVKK'ya uygun işlenmesinden kullanıcı sorumludur.
 - **Yazar:** Erciyes Üniversitesi Tıbbi Genetik Anabilim Dalı asistan doktorlarının
   katkılarıyla Eren Kılınç tarafından tasarlanmış ve geliştirilmiştir.
-- **Teşekkür:** Dr. Nuh Altunoğlu'na teşekkür ederiz.
+- **Teşekkür:** Programın geliştirilmesine olan katkıları için Dr. Nuh Altunoğlu'na teşekkür ederiz.
 - **Lisans:** GNU Genel Kamu Lisansı sürüm 3 ya da sonrası (GPL-3.0-or-later).
 - **Geliştirici notları:** [docs/GELISTIRME.md](docs/GELISTIRME.md)
