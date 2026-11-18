@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "Pedigree Tool"
+abstract: >-
+  Pedigree Tool is a desktop application for drawing pedigrees (family trees) for
+  genetic counselling, teaching and research. Symbols follow the standard pedigree
+  nomenclature (NSGC), layout is automatic, and drawings can be exported as fully
+  editable PowerPoint slides. The application runs entirely on the local computer.
+authors:
+  - family-names: "Kılınç"
+    given-names: "Eren"
+    affiliation: "Department of Medical Genetics, Erciyes University, Kayseri, Türkiye"
+version: "1.7.2"
+date-released: "2026-11-18"
+license: GPL-3.0-or-later
+repository-code: "https://github.com/erenkilinc1869/pedigree-tool"
+keywords:
+  - pedigree
+  - family tree
+  - medical genetics
+  - genetic counselling
+  - pedigree drawing
+  - PowerPoint
