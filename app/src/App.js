@@ -83,8 +83,17 @@
 
     var setPair = React.useState(false);
     var settingsOpen = setPair[0], setSettingsOpen = setPair[1];
+    // Uygulama içi uyarı penceresi (window.alert yerine; bkz. ui/Notice.js). Bazı uyarılar
+    // durum güncelleyicilerinin içinden verildiği için gösterim bir sonraki adıma bırakılır.
+    var noticePair = React.useState(null);
+    var notice = noticePair[0], setNotice = noticePair[1];
+    function notify(message) {
+      setTimeout(function () { setNotice(String(message)); }, 0);
+    }
+
+    // Ayarlar ya da uyarı penceresi açıkken çizim kısayolları ve menü komutları çalışmaz.
     var settingsOpenRef = React.useRef(false);
-    settingsOpenRef.current = settingsOpen;
+    settingsOpenRef.current = settingsOpen || notice !== null;
 
     // Otomatik yerleşim açıkken her yapısal değişiklik aynı adımda düzenlenir.
     var autoPair = React.useState(function () { return PT.loadPref('autolayout', true); });
@@ -434,13 +443,13 @@
 
     function addChild(gender) {
       var m = selectedMating();
-      if (!m) { window.alert(PT.t('msg.linkFirst')); return; }
+      if (!m) { notify(PT.t('msg.linkFirst')); return; }
       addChildToMating(m.id, gender);
     }
 
     function addTwins(zygosity, g1, g2) {
       var m = selectedMating();
-      if (!m) { window.alert(PT.t('msg.linkCouple')); return; }
+      if (!m) { notify(PT.t('msg.linkCouple')); return; }
       commit(function (s) {
         var groupId = PT.uid();
         var slots = PT.newChildSlots(m.id, s.individuals, s.relationships, 2);
@@ -460,7 +469,7 @@
         var kid = s.individuals.find(function (p) { return p.id === selected[0]; });
         if (!kid) return s;
         if (PT.parentLinkOf(kid.id, s.relationships)) {
-          window.alert(PT.t('msg.hasParents'));
+          notify(PT.t('msg.hasParents'));
           return s;
         }
         var dad = PT.newIndividual('male', kid.x - 80, kid.y - PT.GEN_GAP);
@@ -478,7 +487,7 @@
       var me = individuals.find(function (p) { return p.id === selected[0]; });
       if (!me) return;
       var link = PT.parentLinkOf(me.id, relationships);
-      if (!link) { window.alert(PT.t('msg.addParentsFirst')); return; }
+      if (!link) { notify(PT.t('msg.addParentsFirst')); return; }
       var mating = relationships.find(function (r) { return r.id === link.partner1Id; });
       if (!mating) return;
 
@@ -512,7 +521,7 @@
     }
 
     function linkChild() {
-      if (selected.length !== 3) { window.alert(PT.t('msg.select3')); return; }
+      if (selected.length !== 3) { notify(PT.t('msg.select3')); return; }
       commit(function (s) {
         var chosen =s.individuals.filter(function (p) { return selected.indexOf(p.id) !== -1; });
         var existing = s.relationships.find(function (r) {
@@ -527,7 +536,7 @@
           var males = chosen.filter(function (p) { return p.gender === 'male'; });
           var females = chosen.filter(function (p) { return p.gender === 'female'; });
           if (males.length !== 1 || females.length !== 1) {
-            window.alert(PT.t('msg.parentsMF'));
+            notify(PT.t('msg.parentsMF'));
             return s;
           }
           dad = males[0]; mom = females[0];
@@ -545,10 +554,10 @@
         var already = rels.find(function (r) {
           return r.type === 'parent-child' && r.childId === kid.id && r.partner1Id === matingId;
         });
-        if (already) { window.alert(PT.t('msg.linkExists')); return s; }
-        if (PT.parentLinkOf(kid.id, rels)) { window.alert(PT.t('msg.hasParents')); return s; }
+        if (already) { notify(PT.t('msg.linkExists')); return s; }
+        if (PT.parentLinkOf(kid.id, rels)) { notify(PT.t('msg.hasParents')); return s; }
         // Dede/nineyi kendi torununun çocuğu yapmak soyu döngüye sokar.
-        if (PT.linkWouldCycle(kid.id, [dad.id, mom.id], rels)) { window.alert(PT.t('msg.cycle')); return s; }
+        if (PT.linkWouldCycle(kid.id, [dad.id, mom.id], rels)) { notify(PT.t('msg.cycle')); return s; }
 
         rels.push(PT.newParentChild(matingId, kid.id));
         var people = PT.layoutSiblings(matingId, s.individuals, rels);
@@ -598,7 +607,7 @@
 
     function addPhenotype(name, color) {
       if (phenotypeDefs.find(function (d) { return d.name === name; })) {
-        window.alert(PT.t('msg.phenoExists'));
+        notify(PT.t('msg.phenoExists'));
         return;
       }
       var def = { id: PT.uid(), name: name, color: color };
@@ -861,7 +870,7 @@
         });
         return true;
       }).catch(function (err) {
-        window.alert(PT.t('msg.saveFail', { reason: errorReason(err) }));
+        notify(PT.t('msg.saveFail', { reason: errorReason(err) }));
         return false;
       });
     }
@@ -884,7 +893,7 @@
           try {
             next = PT.parseFileText(res.data);
           } catch (err) {
-            window.alert(err.message || PT.t('msg.readFail'));
+            notify(err.message || PT.t('msg.readFail'));
             return;
           }
           endTyping();
@@ -898,7 +907,7 @@
           setTimeout(fitToContent, 60);
         });
       }).catch(function (err) {
-        window.alert(PT.t('msg.openFail', { reason: errorReason(err) }));
+        notify(PT.t('msg.openFail', { reason: errorReason(err) }));
       });
     }
 
@@ -943,7 +952,7 @@
     // ---- dışa aktarma: PowerPoint'te düzenlenebilir şekiller (görüntü değil) ----
     function buildPptx() {
       if (!individuals.length && !labels.length) {
-        window.alert(PT.t('msg.empty'));
+        notify(PT.t('msg.empty'));
         return Promise.resolve(null);
       }
       var bb = contentRef.current.getBBox();
@@ -973,7 +982,7 @@
         }
         return pptx.writeFile({ fileName: defaultName('pptx') });
       }).catch(function (e) {
-        window.alert(PT.t('msg.pptxFail') + errorReason(e));
+        notify(PT.t('msg.pptxFail') + errorReason(e));
       });
     }
 
@@ -1264,6 +1273,10 @@
           onUpdateLabelSize: updateLabelSize,
         })),
       ]),
+      notice !== null ? h(PT.NoticeDialog, {
+        key: 'notice', message: notice,
+        onClose: function () { setNotice(null); },
+      }) : null,
       settingsOpen ? h(PT.SettingsDialog, {
         key: 'settings',
         appearance: appearance,

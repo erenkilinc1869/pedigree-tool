@@ -1,4 +1,4 @@
-# Pedigree Tool — geliştirici notları (sürüm 1.7.2)
+# Pedigree Tool — geliştirici notları (sürüm 1.7.3)
 
 Genetik bölümü için pedigri (soy ağacı) çizim aracı. Erciyes Üniversitesi Tıbbi
 Genetik Anabilim Dalı asistan doktorlarının katkılarıyla Eren Kılınç tarafından

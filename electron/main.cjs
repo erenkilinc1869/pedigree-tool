@@ -56,7 +56,8 @@ const MENU_TEXT = {
       'tanı veya klinik karar için tek başına kullanılamaz, çizimler uzman tarafından kontrol edilmelidir.\n\n' +
       'Uygulama tamamen bu bilgisayarda çalışır, hiçbir veriyi dışarı göndermez. Hasta verilerinin KVKK’ya ' +
       'uygun işlenmesinden kullanıcı sorumludur.\n\n' +
-      'Üçüncü taraf bileşenler: Electron, React, PptxGenJS (MIT lisansı).',
+      'Üçüncü taraf bileşenler: Electron, React, PptxGenJS (MIT lisansı).\n\n' +
+      'Atıf: Kılınç, E. (2026). Pedigree Tool. Zenodo. https://doi.org/10.5281/zenodo.24332669',
   },
   en: {
     file: 'File', new: 'New', open: 'Open...', save: 'Save', saveAs: 'Save As...',
@@ -76,7 +77,8 @@ const MENU_TEXT = {
       'must not be used on its own for diagnosis or clinical decisions, and drawings should be checked by a qualified professional.\n\n' +
       'The application runs entirely on this computer and sends no data anywhere. You are responsible for ' +
       'handling patient data in line with applicable data protection law.\n\n' +
-      'Third-party components: Electron, React, PptxGenJS (MIT licence).',
+      'Third-party components: Electron, React, PptxGenJS (MIT licence).\n\n' +
+      'Cite: Kılınç, E. (2026). Pedigree Tool. Zenodo. https://doi.org/10.5281/zenodo.24332669',
   },
 };
 
@@ -336,6 +338,12 @@ function showAbout() {
   });
 }
 
+// Yerel bir diyalog kapandıktan sonra klavye odağını sayfaya geri verir (Windows'ta
+// bazen pencere odaklı görünür ama sayfa tuşları almaz).
+function refocusPage() {
+  if (win && !win.isDestroyed() && win.isFocused()) win.webContents.focus();
+}
+
 // ---- IPC ----
 
 ipcMain.handle('app:version', () => app.getVersion());
@@ -421,6 +429,7 @@ ipcMain.handle('dialog:confirm', async (_e, { message, detail }) => {
     message,
     detail,
   });
+  refocusPage();
   return res.response === 1;
 });
 

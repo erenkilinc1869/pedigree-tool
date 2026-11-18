@@ -11,7 +11,7 @@ authors:
   - family-names: "Kılınç"
     given-names: "Eren"
     affiliation: "Department of Medical Genetics, Erciyes University, Kayseri, Türkiye"
-version: "1.7.2"
+version: "1.7.3"
 date-released: "2026-11-18"
 license: GPL-3.0-or-later
 doi: 10.5281/zenodo.24332669

@@ -1,7 +1,7 @@
 {
   "name": "pedigree-tool",
   "private": true,
-  "version": "1.7.2",
+  "version": "1.7.3",
   "description": "Genetik bölümü için pedigri (soy ağacı) çizim aracı.",
   "author": "Eren Kılınç",
   "license": "GPL-3.0-or-later",

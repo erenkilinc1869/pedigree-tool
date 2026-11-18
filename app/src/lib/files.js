@@ -66,7 +66,7 @@
 
     version: function () {
       if (api) return api.getVersion();
-      return Promise.resolve('1.7.2');
+      return Promise.resolve('1.7.3');
     },
 
     // Electron'da ana süreç karar verir (kullanıcının seçtiği dil > sistem dili).
