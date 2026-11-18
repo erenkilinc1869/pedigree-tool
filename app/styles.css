@@ -1,0 +1,266 @@
+/* Pedigree Tool — © 2026 Eren Kılınç. GPL-3.0-or-later; bkz. LICENSE. */
+/* Renkler yalnızca buradaki değişkenlerdir. <html data-theme="light|dark"> arayüzü,
+   <html data-paper="light|dark"> çizim alanının kâğıdını belirler; ikisini de
+   src/theme.js sayfa çizilmeden önce yazar. Açık değerler 1.6.0 ile aynıdır. */
+:root {
+  color-scheme: light;
+  --app-bg: #ffffff;       /* gövde ve üst şerit */
+  --panel: #f7f8fa;        /* yan paneller, koşullar kutusu */
+  --line: #d6dae0;
+  --line-soft: #eceff2;    /* liste satırı ayıracı */
+  --ink: #1f2933;
+  --muted: #6b7280;
+  --teal: #0d9488;
+  --teal-dark: #0b7a70;
+  --on-teal: #ffffff;      /* ana düğme yazısı */
+  --btn-bg: #ffffff;
+  --btn-hover: #eef2f5;
+  --btn-on-bg: #d8f3ef;
+  --btn-on-border: var(--teal);
+  --danger-bg: #fff1f1;
+  --danger-border: #e5a1a1;
+  --danger-ink: #b42318;
+  --input-bg: #ffffff;
+  --focus: #2563eb;
+  --swatch-border: #999999;
+  --shade-bg: #eef2f5;     /* ilk açılış ekranının zemini */
+  --card-bg: #ffffff;
+  --shadow: rgba(0, 0, 0, .08);
+  --backdrop: rgba(15, 23, 42, .35);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --app-bg: #16191e;       /* electron/settings.cjs WINDOW_BG.dark ile aynı */
+  --panel: #1d2127;
+  --line: #3a414b;
+  --line-soft: #2a2f36;
+  --ink: #e6e9ed;
+  --muted: #a0a8b3;
+  --teal: #0d9488;         /* marka rengi: ana düğme açık temadakiyle aynı */
+  --teal-dark: #0b7a70;
+  --on-teal: #ffffff;
+  --btn-bg: #262b32;
+  --btn-hover: #2f353e;
+  --btn-on-bg: #12403b;
+  --btn-on-border: #2dd4bf;
+  --danger-bg: #3a1d20;
+  --danger-border: #8a3a3a;
+  --danger-ink: #fca5a5;
+  --input-bg: #121519;
+  --focus: #60a5fa;
+  --swatch-border: #8b939e;
+  --shade-bg: #101215;
+  --card-bg: #1d2127;
+  --shadow: rgba(0, 0, 0, .45);
+  --backdrop: rgba(0, 0, 0, .55);
+}
+
+/* Çizim alanı: kâğıt ve mürekkep. Açık kâğıt 1.6.0'daki siyah-beyazdır. */
+:root {
+  --pd-paper: #ffffff;
+  --pd-ink: #000000;
+  --pd-ink-soft: #444444;
+  --pd-ink-note: #333333;
+  --pd-sel: #2563eb;
+  --pd-sel-glow: #3b82f6;
+  --pd-grid: #dfe3e8;
+  --pd-overlay-bg: rgba(255, 255, 255, .95);
+  --pd-overlay-hint: rgba(255, 255, 255, .85);
+  --pd-overlay-ink: #1f2933;
+  --pd-overlay-muted: #6b7280;
+  --pd-overlay-line: #d6dae0;
+}
+:root[data-paper="dark"] {
+  --pd-paper: #121417;
+  --pd-ink: #eef0f2;
+  --pd-ink-soft: #c3c8cf;
+  --pd-ink-note: #d0d4da;
+  --pd-sel: #60a5fa;
+  --pd-sel-glow: #60a5fa;
+  --pd-grid: #2b3038;
+  --pd-overlay-bg: rgba(29, 33, 39, .95);
+  --pd-overlay-hint: rgba(29, 33, 39, .85);
+  --pd-overlay-ink: #e6e9ed;
+  --pd-overlay-muted: #a0a8b3;
+  --pd-overlay-line: #3a414b;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root { height: 100%; margin: 0; }
+
+body {
+  font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--app-bg);
+  overflow: hidden;
+}
+
+.app { display: flex; flex-direction: column; height: 100%; }
+
+/* Üst şerit: logo, dosya adı, görünüm denetimleri. En dar pencerede (1000 px)
+   denetimler kırpılmak yerine ikinci satıra geçer; başlık kutusu ve dosya adı
+   önce daralır. */
+.topbar {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px;
+  padding: 6px 12px; border-bottom: 1px solid var(--line);
+  background: var(--app-bg); flex: 0 0 auto;
+}
+.topbar .brand { display: flex; align-items: center; gap: 8px; font-weight: 700; letter-spacing: .4px; white-space: nowrap; }
+.topbar .brand img { width: 28px; height: 28px; display: block; }
+.topbar .title-input { flex: 0 1 200px; width: 200px; min-width: 120px; }
+.topbar .filename {
+  color: var(--muted); font-size: 12px; white-space: nowrap;
+  flex: 0 1 auto; min-width: 0; max-width: 240px; overflow: hidden; text-overflow: ellipsis;
+}
+.topbar .spacer { flex: 1; }
+.topbar .gear { display: flex; align-items: center; justify-content: center; padding: 5px 7px; }
+.topbar .gear svg { display: block; }
+
+.body { display: flex; flex: 1; min-height: 0; }
+
+.sidebar {
+  width: 260px; flex: 0 0 260px; overflow-y: auto;
+  border-right: 1px solid var(--line); background: var(--panel);
+}
+.sidebar.right { border-right: none; border-left: 1px solid var(--line); }
+
+.canvas { flex: 1; position: relative; overflow: hidden; background: var(--pd-paper); min-width: 0; }
+.canvas svg { position: relative; z-index: 1; display: block; touch-action: none; }
+.grid { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+
+/* Denetim paneli öğeleri */
+.group { padding: 10px 12px; border-bottom: 1px solid var(--line); }
+/* Büyük harf JS'te dile göre yapılır (PT.upper); CSS text-transform çalışırken
+   dil değişince <html lang>'in bir adım gerisinde kalıyordu. */
+.group h4 { margin: 0 0 8px; font-size: 11px; letter-spacing: .6px; color: var(--muted); }
+.group .who { margin-bottom: 8px; }
+.row { display: flex; gap: 6px; margin-bottom: 6px; }
+.row:last-child { margin-bottom: 0; }
+
+/* Düğme yazısı tek satırda kalır. Esnek satırlarda min-width:auto sayesinde
+   düğme yazısından dar olmaz; yer varsa eşit paylaşılır. */
+button {
+  font: inherit; padding: 6px 8px; cursor: pointer; white-space: nowrap;
+  background: var(--btn-bg); border: 1px solid var(--line); border-radius: 4px; color: var(--ink);
+}
+button:hover:not(:disabled) { background: var(--btn-hover); }
+button:disabled { opacity: .45; cursor: not-allowed; }
+button.grow { flex: 1; }
+button.primary { background: var(--teal); border-color: var(--teal-dark); color: var(--on-teal); font-weight: 600; }
+button.primary:hover:not(:disabled) { background: var(--teal-dark); }
+button.danger { background: var(--danger-bg); border-color: var(--danger-border); color: var(--danger-ink); }
+button.on { background: var(--btn-on-bg); border-color: var(--btn-on-border); }
+button.mini { padding: 4px 6px; font-size: 11px; }
+
+/* Klavyeyle gezinirken odak her iki temada da açıkça görünsün. */
+button:focus-visible, select:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--focus); outline-offset: 1px;
+}
+
+input[type="text"], input[type="number"], textarea, select {
+  font: inherit; padding: 5px 6px; border: 1px solid var(--line);
+  border-radius: 4px; width: 100%; background: var(--input-bg); color: var(--ink);
+}
+input::placeholder, textarea::placeholder { color: var(--muted); opacity: 1; }
+input[type="color"] { background: var(--input-bg); }
+textarea { resize: vertical; }
+label.field { display: block; margin-bottom: 8px; }
+label.field > span { display: block; font-size: 11px; color: var(--muted); margin-bottom: 3px; }
+
+.zoomctl { display: flex; align-items: center; gap: 4px; }
+.zoomctl .pct { min-width: 46px; text-align: center; color: var(--muted); }
+
+/* Gösterge ve ipucu çizim alanının üstünde durur; kâğıdın rengini izler. */
+.legend {
+  position: absolute; right: 16px; bottom: 16px; z-index: 5;
+  background: var(--pd-overlay-bg); border: 1px solid var(--pd-overlay-line); color: var(--pd-overlay-ink);
+  border-radius: 8px; padding: 10px; min-width: 150px; pointer-events: none;
+  box-shadow: 0 2px 10px var(--shadow);
+}
+.legend h5 { margin: 0 0 6px; font-size: 11px; border-bottom: 1px solid var(--pd-overlay-line); padding-bottom: 4px; }
+.legend div.item { display: flex; align-items: center; gap: 8px; font-size: 11px; margin-bottom: 3px; }
+.legend span.sw { width: 12px; height: 12px; border: 1px solid var(--swatch-border); border-radius: 2px; display: inline-block; }
+
+.hint {
+  position: absolute; left: 16px; bottom: 16px; z-index: 5;
+  color: var(--pd-overlay-muted); font-size: 11px; pointer-events: none;
+  background: var(--pd-overlay-hint); padding: 4px 8px; border-radius: 4px;
+}
+
+.empty { padding: 16px; color: var(--muted); }
+
+/* Sağ paneldeki fenotip listesi */
+.pheno-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 4px 0; border-bottom: 1px solid var(--line-soft);
+}
+.pheno-dot {
+  width: 12px; height: 12px; border-radius: 50%; display: inline-block;
+  border: 1px solid var(--swatch-border);
+}
+.muted { color: var(--muted); }
+
+/* İlk açılış ekranı */
+.firstrun {
+  position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: var(--shade-bg); padding: 16px;
+}
+.fr-card {
+  width: min(760px, 100%); max-height: 100%; display: flex; flex-direction: column; gap: 14px;
+  background: var(--card-bg); border: 1px solid var(--line); border-radius: 10px; padding: 22px;
+  box-shadow: 0 8px 30px var(--shadow);
+}
+.fr-head { display: flex; align-items: center; gap: 14px; }
+.fr-head img { width: 54px; height: 54px; flex: 0 0 auto; }
+.fr-head h1 { margin: 0 0 4px; font-size: 20px; }
+.fr-head p { margin: 0; color: var(--muted); }
+.fr-head > div:nth-child(2) { flex: 1; }
+.fr-lang { display: flex; gap: 6px; }
+.fr-terms {
+  white-space: pre-wrap; overflow-y: auto; min-height: 160px; flex: 1 1 auto;
+  border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px;
+  background: var(--panel); line-height: 1.5; font-size: 12.5px;
+}
+.fr-opts { display: flex; gap: 22px; flex-wrap: wrap; }
+.fr-check { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+.fr-actions { display: flex; justify-content: flex-end; gap: 8px; }
+.fr-actions button { padding: 8px 16px; }
+
+/* Ayarlar penceresi */
+.modal-backdrop {
+  position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center;
+  background: var(--backdrop); padding: 16px;
+}
+.modal {
+  width: min(480px, 100%); max-height: 100%; overflow-y: auto; outline: none;
+  background: var(--card-bg); color: var(--ink); border: 1px solid var(--line); border-radius: 10px;
+  box-shadow: 0 12px 40px var(--shadow); display: flex; flex-direction: column;
+}
+.modal-head { padding: 14px 18px 4px; }
+.modal-head h2 { margin: 0; font-size: 16px; }
+.modal-body { padding: 4px 18px 6px; }
+.modal-foot { display: flex; justify-content: flex-end; padding: 10px 18px 16px; }
+.modal-foot button { padding: 7px 16px; }
+.set-sec { padding: 10px 0; border-bottom: 1px solid var(--line-soft); }
+.set-sec:last-child { border-bottom: none; }
+.set-sec h3 { margin: 0 0 7px; font-size: 12px; font-weight: 600; }
+.set-sec.inactive h3, .set-sec.inactive .seg { opacity: .55; }
+.set-note { margin: 6px 0 0; font-size: 11.5px; color: var(--muted); line-height: 1.4; }
+.seg { display: flex; }
+.seg button { flex: 1; border-radius: 0; margin-left: -1px; }
+.seg button:first-child { border-radius: 4px 0 0 4px; margin-left: 0; }
+.seg button:last-child { border-radius: 0 4px 4px 0; }
+.seg button.on { position: relative; z-index: 1; font-weight: 600; }
+.seg button:focus-visible { position: relative; z-index: 2; }
+.set-check { display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 3px 0; }
+.set-check input { margin: 0; width: 15px; height: 15px; }
+
+@media (max-width: 900px) {
+  .body { flex-direction: column; }
+  .sidebar { width: 100%; flex: 0 0 auto; max-height: 30vh; border-right: none; border-bottom: 1px solid var(--line); }
+  .sidebar.right { border-left: none; border-top: 1px solid var(--line); max-height: 26vh; }
+  .canvas { flex: 1 1 auto; min-height: 44vh; }
+}

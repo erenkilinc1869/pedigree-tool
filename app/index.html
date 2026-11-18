@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!-- Pedigree Tool — © 2026 Eren Kılınç. GPL-3.0-or-later; bkz. LICENSE. -->
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' blob:; font-src 'self'" />
+    <title>Pedigree Tool</title>
+    <link rel="icon" href="assets/EK-logo.png" />
+    <!-- Tema, stil dosyasından önce: ilk boyamada yanlış tema bir an bile görünmesin. -->
+    <script src="src/theme.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- Kütüphaneler (yerel kopyalar; derleme adımı yok) -->
+    <script src="vendor/react.js"></script>
+    <script src="vendor/react-dom.js"></script>
+    <script src="vendor/pptxgen.js"></script>
+
+    <!-- Uygulama. Sıra önemlidir: her dosya window.PT ad alanına yazar. -->
+    <script src="src/constants.js"></script>
+    <script src="src/i18n.js"></script>
+    <script src="src/terms.js"></script>
+    <script src="src/lib/pedigree.js"></script>
+    <script src="src/lib/layout.js"></script>
+    <script src="src/lib/pptx.js"></script>
+    <script src="src/lib/files.js"></script>
+    <script src="src/state/history.js"></script>
+    <script src="src/state/storage.js"></script>
+    <script src="src/ui/logo.js"></script>
+    <script src="src/ui/RelationshipLine.js"></script>
+    <script src="src/ui/PersonNode.js"></script>
+    <script src="src/ui/TextLabel.js"></script>
+    <script src="src/ui/Toolbar.js"></script>
+    <script src="src/ui/DetailsPanel.js"></script>
+    <script src="src/ui/FirstRun.js"></script>
+    <script src="src/ui/SettingsDialog.js"></script>
+    <script src="src/App.js"></script>
+    <script src="src/main.js"></script>
+  </body>
+</html>
