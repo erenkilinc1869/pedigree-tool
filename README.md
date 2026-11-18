@@ -71,6 +71,10 @@ If you use Pedigree Tool in your work, please cite it. Citation details are in
 Designed and developed by **Eren Kılınç**, with contributions from the resident
 physicians of the Department of Medical Genetics, Erciyes University.
 
+## Acknowledgements
+
+With thanks to Dr. Nuh Altunoğlu.
+
 ## Licence
 
 Copyright (c) 2026 Eren Kılınç.
@@ -101,5 +105,6 @@ olarak dışa aktarılabilir.
   kullanılamaz. Hasta verilerinin KVKK'ya uygun işlenmesinden kullanıcı sorumludur.
 - **Yazar:** Erciyes Üniversitesi Tıbbi Genetik Anabilim Dalı asistan doktorlarının
   katkılarıyla Eren Kılınç tarafından tasarlanmış ve geliştirilmiştir.
+- **Teşekkür:** Dr. Nuh Altunoğlu'na teşekkür ederiz.
 - **Lisans:** GNU Genel Kamu Lisansı sürüm 3 ya da sonrası (GPL-3.0-or-later).
 - **Geliştirici notları:** [docs/GELISTIRME.md](docs/GELISTIRME.md)
