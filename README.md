@@ -1,5 +1,7 @@
 # Pedigree Tool
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24332669.svg)](https://doi.org/10.5281/zenodo.24332669)
+
 A desktop application for drawing pedigrees (family trees) for genetic counselling,
 teaching and research. Symbols follow the standard pedigree nomenclature (NSGC), and a
 drawing can be exported as a fully editable PowerPoint slide.
@@ -31,7 +33,7 @@ Genetik danışmanlık, eğitim ve araştırma için pedigri (soy ağacı) çizi
 
 ## Download and run (Windows)
 
-1. Download `Pedigree Tool-<version>-win.zip` from the
+1. Download `Pedigree.Tool-<version>-win.zip` from the
    [Releases](https://github.com/erenkilinc1869/pedigree-tool/releases) page.
 2. Extract the zip anywhere and double-click `Pedigree Tool.exe`. There is no installer.
 
@@ -63,8 +65,13 @@ recommended.
 
 ## How to cite
 
-If you use Pedigree Tool in your work, please cite it. Citation details are in
-[CITATION.cff](CITATION.cff) (on GitHub: "Cite this repository" in the sidebar).
+If you use Pedigree Tool in your work, please cite it:
+
+> Kılınç, E. (2026). *Pedigree Tool*. Zenodo. https://doi.org/10.5281/zenodo.24332669
+
+This DOI always points to the latest version; each release also has its own DOI on Zenodo.
+Machine-readable details are in [CITATION.cff](CITATION.cff) (on GitHub: "Cite this
+repository" in the sidebar).
 
 ## Authors
 
@@ -108,5 +115,6 @@ olarak dışa aktarılabilir.
   katkılarıyla Eren Kılınç tarafından tasarlanmış ve geliştirilmiştir.
 - **Teşekkür:** Programın geliştirilmesine olan katkıları için Dr. Nuh Altunoğlu'na ve Erciyes
   Üniversitesi Tıbbi Genetik Anabilim Dalı asistan doktorlarına teşekkür ederiz.
+- **Atıf:** Kılınç, E. (2026). *Pedigree Tool*. Zenodo. https://doi.org/10.5281/zenodo.24332669
 - **Lisans:** GNU Genel Kamu Lisansı sürüm 3 ya da sonrası (GPL-3.0-or-later).
 - **Geliştirici notları:** [docs/GELISTIRME.md](docs/GELISTIRME.md)
