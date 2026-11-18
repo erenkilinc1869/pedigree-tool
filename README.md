@@ -73,7 +73,7 @@ physicians of the Department of Medical Genetics, Erciyes University.
 
 ## Acknowledgements
 
-With thanks to Dr. Nuh Altunoğlu for his contributions to the development of the program.
+With thanks to Dr. Nuh Altunoğlu for contributions to the development of the program.
 
 ## Licence
 
